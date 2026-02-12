@@ -1,2 +1,4 @@
 matplotlib
 polars
+streamlit-dynamic-filters
+fastexcel
