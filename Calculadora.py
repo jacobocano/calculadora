@@ -71,15 +71,18 @@ import streamlit as st
 
 
 
-if st.user.is_logged_in:
-    st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
+#if st.user.is_logged_in:
+#if st.user:
+if st.session_state.get("authenticated"):
+    st.sidebar.write(f"Hola! 👋 {st.user['name']}")
     #st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
     if st.sidebar.button("Cerrar sesión"):
         st.logout()
 else:
     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
         st.login()
-        #st.login("microsoft")
+        #st.login(provider="microsoft")
+        
         #st.write(f"{st.user["name"]} - {st.user["email"]}")
     #st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
     st.stop()
