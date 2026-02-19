@@ -1,9 +1,6 @@
 import streamlit as st
 
-st.login("microsoft")
-
-if st.user.is_logged_in:
-    st.write(f"Hola {st.user.name}")
+st.write(st.secrets)
 
 # if st.user.is_logged_in:
 #     st.write(f"Sesión activa: {st.user["name"]}")
