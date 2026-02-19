@@ -13,6 +13,91 @@ from pathlib import Path                                # Para llamar archivos e
 from io import BytesIO
 from fastexcel import read_excel
 
+import streamlit as st
+
+# import requests
+
+# token_url = "https://login.microsoftonline.com/TU_TENANT_ID/oauth2/v2.0/token"
+
+# data = {
+#     "client_id": CLIENT_ID,
+#     "client_secret": CLIENT_SECRET,
+#     "code": auth_code,
+#     "redirect_uri": REDIRECT_URI,
+#     "grant_type": "authorization_code"
+# }
+
+# response = requests.post(token_url, data=data)
+# tokens = response.json()
+# st.write("Tokens:", tokens)
+
+# st.write("Query params:", st.query_params)                  # Si query_params está vacío → el flujo OAuth no se está procesando.
+# st.write("User:", st.user)                                  # Si st.user es None → la cookie no se está validando.
+# st.write("Logged:", st.user.is_logged_in)                   # Si query_params tiene code pero is_logged_in es False → cookie_secret / redirect mismatch.
+
+# def login_screen():
+#     st.header("Esta es una aplicación privada.")
+#     st.subheader("Por favor, inicie sesión.")
+#     st.button("Iniciar sesión en Microsoft", on_click=st.login)
+
+# if not st.user.is_logged_in:
+#     login_screen()
+# else:
+#     st.header(f"Bienvenido, {st.user.name}!")
+#     st.button("Cerrar sesión", on_click=st.logout)
+
+# if "user" not in st.session_state:
+#     st.session_state["user"] = {}
+
+# st.button("Log out", on_click=st.logout)
+
+# st.write("st.session_state object: ", st.session_state)
+
+# ------------------------------------------------------------------------------------------------------------------------------------
+# Microsoft Login
+# ------------------------------------------------------------------------------------------------------------------------------------
+
+# microsoft_login = st.button("Iniciar sesión en Microsoft", on_click=st.login)
+
+# if microsoft_login:
+#     st.login(provider="microsoft")
+
+
+
+# logout_button = st.button("Logout")
+
+# if logout_button:
+#     st.logout()
+
+
+
+if st.user.is_logged_in:
+    st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
+    #st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
+    if st.sidebar.button("Cerrar sesión"):
+        st.logout()
+else:
+    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+        st.login()
+        #st.login("microsoft")
+        #st.write(f"{st.user["name"]} - {st.user["email"]}")
+    #st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
+    st.stop()
+        #st.login(provider="microsoft")
+
+#st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
+
+
+# user_data = st.experimental_user 
+# # Check if user data exists and get the name
+# if user_data and user_data.get("is_logged_in", False):
+#     if "name" in user_data and user_data["name"]:
+#         st.write(f"User name: {user_data['name']}")
+#     if "email" in user_data and user_data["email"]:
+#         st.write(f"Email: {user_data['email']}")
+#     if "preferred_username" in user_data and user_data["preferred_username"]:
+#         st.write(f"Preferred Username: {user_data['preferred_username']}")
+
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Configuración general del panel
 # ------------------------------------------------------------------------------------------------------------------------------------
@@ -43,7 +128,7 @@ if Path(data_file_path).exists():
     dataframe = Cargando_datos(data_file_path)
 else:
     st.error("Archivo no encontrado.")
-    
+
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Titulo
 # ------------------------------------------------------------------------------------------------------------------------------------
@@ -59,7 +144,7 @@ st.sidebar.image(image, width="content")
 # ------------------------------------------------------------------------------------------------------------------------------------
 
 selected_cat = st.sidebar.selectbox(
-    "Código de categoria",    
+    "Código de categoria",
     options=["Seleccione"] + dataframe
         .select(
             (
@@ -69,8 +154,8 @@ selected_cat = st.sidebar.selectbox(
         .unique()
         .sort('CODIGO_CATEGORIA')
         .to_series()
-        .to_list()   
-        
+        .to_list()
+
     ,label_visibility="visible"
     ,index=0
 )
@@ -226,7 +311,7 @@ if selected_ze:
         ,pl.col("MODELO") == selected_modelo
         ,pl.col("NIVEL") == selected_nivel
         ,pl.col("CVE_Z_ECONOMICA") == selected_ze
-        
+
     )
 else:
     dataframe_filtro_tp = dataframe
@@ -285,7 +370,7 @@ if selected_ze:
         ,pl.col("MODELO") == selected_modelo
         ,pl.col("NIVEL") == selected_nivel
         ,pl.col("CVE_Z_ECONOMICA") == selected_ze
-        
+
     )
 else:
     dataframe_filtro_ur = dataframe
@@ -338,7 +423,7 @@ if selected_tp == "H":
 # ------------------------------------------------------------------------------------------------------------------------------------
 if selected_cat:
     categorias = dataframe[["CODIGO_CATEGORIA", "CATEGORIA", "MODELO", "NIVEL", "CVE_Z_ECONOMICA", "TIPO_PLAZA", "ENTIDAD_FEDERATIVA"]].unique()
-    
+
     if selected_modelo:
         categoria = (
             categorias.filter(
@@ -351,7 +436,7 @@ if selected_cat:
                         by=["CATEGORIA", "MODELO"]
                         ,descending=[False, False]
                         )
-        )   
+        )
 
         if selected_nivel:
             categoria = (
@@ -364,10 +449,10 @@ if selected_cat:
                         .unique()
                         .sort(
                                 by=["CATEGORIA", "MODELO", "NIVEL"]
-                                ,descending=[False, False, False] 
+                                ,descending=[False, False, False]
                             )
-            ) 
-            
+            )
+
 
             if selected_ze:
                 categoria = (
@@ -381,10 +466,10 @@ if selected_cat:
                             .unique()
                             .sort(
                                     by=["CATEGORIA", "MODELO", "NIVEL", "CVE_Z_ECONOMICA"]
-                                    ,descending=[False, False, False, False] 
+                                    ,descending=[False, False, False, False]
                                 )
-                ) 
-                
+                )
+
 
                 if selected_tp:
                     categoria = (
@@ -399,10 +484,10 @@ if selected_cat:
                                 .unique()
                                 .sort(
                                         by=["CATEGORIA", "MODELO", "NIVEL", "CVE_Z_ECONOMICA", "TIPO_PLAZA"]
-                                        ,descending=[False, False, False, False, False] 
+                                        ,descending=[False, False, False, False, False]
                                     )
-                    ) 
-                    
+                    )
+
                     if selected_ur:
                         categoria = (
                             categorias.filter(
@@ -419,7 +504,7 @@ if selected_cat:
                                             by=["CATEGORIA", "MODELO", "NIVEL", "CVE_Z_ECONOMICA", "TIPO_PLAZA", "ENTIDAD_FEDERATIVA"]
                                             ,descending=[False, False, False, False, False, False]
                                         )
-                        ) 
+                        )
                         st.write("", selected_cat + ' ' + categoria["CATEGORIA"] + ', MODELO  ' + categoria["MODELO"] + ', NIVEL  ' + categoria["NIVEL"] + ', ZONA ECONÓMICA  ' + categoria["CVE_Z_ECONOMICA"] + ', TIPO PLAZA  ' + categoria["TIPO_PLAZA"] + ', ENTIDAD  ' + categoria["ENTIDAD_FEDERATIVA"])
 
                     else:
@@ -429,10 +514,10 @@ if selected_cat:
                     st.write("", selected_cat + ' ' + categoria["CATEGORIA"] + ', MODELO  ' + categoria["MODELO"] + ', NIVEL  ' + categoria["NIVEL"] + ', ZONA ECONÓMICA  ' + categoria["CVE_Z_ECONOMICA"])
 
             else:
-                st.write("", selected_cat + ' ' + categoria["CATEGORIA"] + ', MODELO  ' + categoria["MODELO"] + ', NIVEL  ' + categoria["NIVEL"])  
+                st.write("", selected_cat + ' ' + categoria["CATEGORIA"] + ', MODELO  ' + categoria["MODELO"] + ', NIVEL  ' + categoria["NIVEL"])
 
         else:
-            st.write("", selected_cat + ' ' + categoria["CATEGORIA"] + ', MODELO  ' + categoria["MODELO"])  
+            st.write("", selected_cat + ' ' + categoria["CATEGORIA"] + ', MODELO  ' + categoria["MODELO"])
 
     else:
         categoria = (
@@ -446,13 +531,13 @@ if selected_cat:
                 )
         )
         st.write("", selected_cat + ' ' + categoria)
-    
+
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Panel central: Datagrid - Columnas
 # ------------------------------------------------------------------------------------------------------------------------------------
 
 df_calculadora = (
-    dataframe    
+    dataframe
     .select(pl.col("ENTIDAD_FEDERATIVA").alias('ENTIDAD')
         ,pl.col("CODIGO_CATEGORIA").alias("CODIGO_CATEGORIA")
         ,pl.col("CATEGORIA").alias("CATEGORIA")
@@ -492,7 +577,7 @@ df_calculadora = (
 
         ,pl.col("COSTO_UNITARIO_ANUAL").alias('COSTO UNITARIO ANUAL')
 
-    )        
+    )
 )
 
 # ------------------------------------------------------------------------------------------------------------------------------------
@@ -573,9 +658,9 @@ if txt_plazas and int(txt_plazas) > 0:
     # costo_total = 1
     if selected_cat:
         df_calculadora_totales = (
-            df_calculadora    
+            df_calculadora
             .select(
-                
+
                 pl.col("COSTO UNITARIO ANUAL").sum().alias('COSTO TOTAL ANUAL') * costo_total
 
                 ,pl.col("ENERO").sum().alias('ENE') * costo_total
@@ -593,9 +678,9 @@ if txt_plazas and int(txt_plazas) > 0:
                 ,pl.col("NOVIEMBRE").sum().alias('NOV') * costo_total
                 ,pl.col("DICIEMBRE").sum().alias('DIC') * costo_total
 
-                
 
-            )        
+
+            )
         )
 
         st.data_editor(
@@ -611,7 +696,7 @@ if txt_plazas and int(txt_plazas) > 0:
                 "JUN": st.column_config.NumberColumn(format="accounting"),
                 "JUL": st.column_config.NumberColumn(format="accounting"),
                 "AGO": st.column_config.NumberColumn(format="accounting"),
-                
+
                 "SEP": st.column_config.NumberColumn(format="accounting"),
                 "OCT": st.column_config.NumberColumn(format="accounting"),
                 "NOV": st.column_config.NumberColumn(format="accounting"),
@@ -619,8 +704,9 @@ if txt_plazas and int(txt_plazas) > 0:
 
                 "COSTO TOTAL ANUAL": st.column_config.NumberColumn(format="accounting")
             },
-            use_container_width=True,
-            disabled=True
+            #use_container_width=True,
+            width="stretch"
+            ,disabled=True
             ,hide_index=True
         )
 
@@ -648,7 +734,7 @@ if selected_cat:
             "JUNIO": st.column_config.NumberColumn(format="accounting"),
             "JULIO": st.column_config.NumberColumn(format="accounting"),
             "AGOSTO": st.column_config.NumberColumn(format="accounting"),
-            
+
             "SEPTIEMBRE": st.column_config.NumberColumn(format="accounting"),
             "OCTUBRE": st.column_config.NumberColumn(format="accounting"),
             "NOVIEMBRE": st.column_config.NumberColumn(format="accounting"),
@@ -656,7 +742,8 @@ if selected_cat:
 
             "COSTO UNITARIO ANUAL": st.column_config.NumberColumn(format="accounting"),
         },
-        use_container_width=True,
-        disabled=True
+        #use_container_width=True,
+        width="stretch"
+        ,disabled=True
         ,hide_index=True
     )
