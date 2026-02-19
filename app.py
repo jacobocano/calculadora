@@ -1,14 +1,18 @@
 import streamlit as st
 
-if st.user.is_logged_in:
-    st.write(f"Sesión activa: {st.user["name"]}")
-    if st.button("Cerrar sesión"):
-        st.logout()
-else:
-    if st.button("Iniciar sesión en Microsoft"):
-        st.login("microsoftapp")
-        st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
-    st.stop()
+import streamlit as st
+st.write(st.secrets)
+
+
+# if st.user.is_logged_in:
+#     st.write(f"Sesión activa: {st.user["name"]}")
+#     if st.button("Cerrar sesión"):
+#         st.logout()
+# else:
+#     if st.button("Iniciar sesión en Microsoft"):
+#         st.login("microsoftapp")
+#         st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
+#     st.stop()
 
 # if st.user.is_logged_in:
 #     st.write(f"Sesión activa: {st.user.name}")
