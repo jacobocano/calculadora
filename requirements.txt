@@ -2,4 +2,4 @@ matplotlib
 polars
 fastexcel
 streamlit>=1.54.0
-Authlib>=1.6.8
+Authlib>=1.6.6
