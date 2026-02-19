@@ -19,13 +19,14 @@ import streamlit as st
 # Microsoft Login
 # ------------------------------------------------------------------------------------------------------------------------------------
 
-if st.session_state.get("authenticated"):
-    st.sidebar.write(f"Hola! 👋 {st.user['name']}")
+if st.user.is_logged_in:
+    st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
     if st.sidebar.button("Cerrar sesión"):
         st.logout()
 else:
     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
         st.login()
+    st.stop()
 
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Configuración general del panel
