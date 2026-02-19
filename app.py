@@ -1,5 +1,5 @@
 import streamlit as st
-st.login("microsoft")
+st.login()
 st.write(st.query_params)
 
 # if st.user.is_logged_in:
