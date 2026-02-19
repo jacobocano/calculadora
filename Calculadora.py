@@ -15,87 +15,18 @@ from fastexcel import read_excel
 
 import streamlit as st
 
-# import requests
-
-# token_url = "https://login.microsoftonline.com/TU_TENANT_ID/oauth2/v2.0/token"
-
-# data = {
-#     "client_id": CLIENT_ID,
-#     "client_secret": CLIENT_SECRET,
-#     "code": auth_code,
-#     "redirect_uri": REDIRECT_URI,
-#     "grant_type": "authorization_code"
-# }
-
-# response = requests.post(token_url, data=data)
-# tokens = response.json()
-# st.write("Tokens:", tokens)
-
-# st.write("Query params:", st.query_params)                  # Si query_params está vacío → el flujo OAuth no se está procesando.
-# st.write("User:", st.user)                                  # Si st.user es None → la cookie no se está validando.
-# st.write("Logged:", st.user.is_logged_in)                   # Si query_params tiene code pero is_logged_in es False → cookie_secret / redirect mismatch.
-
-# def login_screen():
-#     st.header("Esta es una aplicación privada.")
-#     st.subheader("Por favor, inicie sesión.")
-#     st.button("Iniciar sesión en Microsoft", on_click=st.login)
-
-# if not st.user.is_logged_in:
-#     login_screen()
-# else:
-#     st.header(f"Bienvenido, {st.user.name}!")
-#     st.button("Cerrar sesión", on_click=st.logout)
-
-# if "user" not in st.session_state:
-#     st.session_state["user"] = {}
-
-# st.button("Log out", on_click=st.logout)
-
-# st.write("st.session_state object: ", st.session_state)
-
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Microsoft Login
 # ------------------------------------------------------------------------------------------------------------------------------------
 
-# microsoft_login = st.button("Iniciar sesión en Microsoft", on_click=st.login)
-
-# if microsoft_login:
-#     st.login(provider="microsoft")
-
-
-
-# logout_button = st.button("Logout")
-
-# if logout_button:
-#     st.logout()
-
-
-# if not st.user.is_logged_in:
-#     st.button("Log in with Microsoft", on_click=st.login)  # or st.login("microsoft") if named
-#     st.stop()
-
-# st.write(f"Welcome, {st.user.name}!")
-# st.button("Log out", on_click=st.logout)
-
-
-if st.session_state.get("authenticated"):
+#if st.session_state.get("authenticated"):
+if not st.user.is_logged_in:
     st.sidebar.write(f"Hola! 👋 {st.user['name']}")
     if st.sidebar.button("Cerrar sesión"):
         st.logout()
 else:
     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
         st.login()
-
-
-# user_data = st.experimental_user 
-# # Check if user data exists and get the name
-# if user_data and user_data.get("is_logged_in", False):
-#     if "name" in user_data and user_data["name"]:
-#         st.write(f"User name: {user_data['name']}")
-#     if "email" in user_data and user_data["email"]:
-#         st.write(f"Email: {user_data['email']}")
-#     if "preferred_username" in user_data and user_data["preferred_username"]:
-#         st.write(f"Preferred Username: {user_data['preferred_username']}")
 
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Configuración general del panel
