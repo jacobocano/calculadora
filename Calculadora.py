@@ -19,8 +19,7 @@ import streamlit as st
 # Microsoft Login
 # ------------------------------------------------------------------------------------------------------------------------------------
 
-#if st.session_state.get("authenticated"):
-if st.session_state["user"] :
+if st.session_state.get("authenticated"):
     st.sidebar.write(f"Hola! 👋 {st.user['name']}")
     if st.sidebar.button("Cerrar sesión"):
         st.logout()
