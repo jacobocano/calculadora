@@ -79,7 +79,7 @@ if st.session_state.get("authenticated"):
     if st.sidebar.button("Cerrar sesión"):
         st.logout()
 else:
-    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login, args=["microsoft"]):
         #st.login("microsoft")
         st.login()
         #st.login(provider="microsoft")
