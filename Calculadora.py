@@ -70,21 +70,21 @@ import streamlit as st
 #     st.logout()
 
 
-if not st.user.is_logged_in:
-    st.button("Log in with Microsoft", on_click=st.login)  # or st.login("microsoft") if named
-    st.stop()
+# if not st.user.is_logged_in:
+#     st.button("Log in with Microsoft", on_click=st.login)  # or st.login("microsoft") if named
+#     st.stop()
 
-st.write(f"Welcome, {st.user.name}!")
-st.button("Log out", on_click=st.logout)
+# st.write(f"Welcome, {st.user.name}!")
+# st.button("Log out", on_click=st.logout)
 
 
-# if st.session_state.get("authenticated"):
-#     st.sidebar.write(f"Hola! 👋 {st.user['name']}")
-#     if st.sidebar.button("Cerrar sesión"):
-#         st.logout()
-# else:
-#     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-#         st.login()
+if st.session_state.get("authenticated"):
+    st.sidebar.write(f"Hola! 👋 {st.user['name']}")
+    if st.sidebar.button("Cerrar sesión"):
+        st.logout()
+else:
+    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+        st.login()
 
 
 # user_data = st.experimental_user 
