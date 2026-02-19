@@ -17,7 +17,7 @@ import streamlit as st
 
 # import requests
 
-# token_url = "https://login.microsoftonline.com/TU_TENANT_ID/oauth2/v2.0/token"
+# token_url = "https://login.microsoftonline.com/6b874ffe-e856-4262-bc7f-9f7b945ef3b3/oauth2/v2.0/token"
 
 # data = {
 #     "client_id": CLIENT_ID,
@@ -35,68 +35,43 @@ import streamlit as st
 # st.write("User:", st.user)                                  # Si st.user es None → la cookie no se está validando.
 # st.write("Logged:", st.user.is_logged_in)                   # Si query_params tiene code pero is_logged_in es False → cookie_secret / redirect mismatch.
 
-# def login_screen():
-#     st.header("Esta es una aplicación privada.")
-#     st.subheader("Por favor, inicie sesión.")
-#     st.button("Iniciar sesión en Microsoft", on_click=st.login)
+def login_screen():
+    st.header("Esta es una aplicación privada.")
+    st.subheader("Por favor, inicie sesión.")
+    st.session_state["user"] = {}
+    
+    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+        st.login()
+    st.stop()
 
-# if not st.user.is_logged_in:
-#     login_screen()
-# else:
-#     st.header(f"Bienvenido, {st.user.name}!")
-#     st.button("Cerrar sesión", on_click=st.logout)
-
-# if "user" not in st.session_state:
-#     st.session_state["user"] = {}
-
-# st.button("Log out", on_click=st.logout)
-
-# st.write("st.session_state object: ", st.session_state)
+if st.session_state:
+    login_screen()
+    
+else:
+    # st.header(f"Bienvenido, {st.user.name}!")
+    # st.button("Cerrar sesión", on_click=st.logout)
+    # st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
+    # st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
+    if st.sidebar.button("Cerrar sesión"):
+        st.logout()
 
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Microsoft Login
 # ------------------------------------------------------------------------------------------------------------------------------------
 
-# microsoft_login = st.button("Iniciar sesión en Microsoft", on_click=st.login)
 
-# if microsoft_login:
-#     st.login(provider="microsoft")
+# if st.user.is_logged_in:
+#     # st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
+#     # st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
+#     if st.sidebar.button("Cerrar sesión"):
+#         st.logout()
+# else:
+#     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+#         st.login()
+#         #st.login("microsoft")
+#         #st.write(f"{st.user["name"]} - {st.user["email"]}")
+#     st.stop()
 
-
-
-# logout_button = st.button("Logout")
-
-# if logout_button:
-#     st.logout()
-
-
-
-if st.user.is_logged_in:
-    # st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
-    #st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
-    if st.sidebar.button("Cerrar sesión"):
-        st.logout()
-else:
-    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-        st.login()
-        #st.login("microsoft")
-        #st.write(f"{st.user["name"]} - {st.user["email"]}")
-    #st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
-    st.stop()
-        #st.login(provider="microsoft")
-
-#st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
-
-
-# user_data = st.experimental_user 
-# # Check if user data exists and get the name
-# if user_data and user_data.get("is_logged_in", False):
-#     if "name" in user_data and user_data["name"]:
-#         st.write(f"User name: {user_data['name']}")
-#     if "email" in user_data and user_data["email"]:
-#         st.write(f"Email: {user_data['email']}")
-#     if "preferred_username" in user_data and user_data["preferred_username"]:
-#         st.write(f"Preferred Username: {user_data['preferred_username']}")
 
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Configuración general del panel
