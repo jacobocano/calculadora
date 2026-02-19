@@ -70,27 +70,21 @@ import streamlit as st
 #     st.logout()
 
 
-
-#if st.user.is_logged_in:
-#if st.user:
-if st.session_state.get("authenticated"):
-    st.sidebar.write(f"Hola! 👋 {st.user['name']}")
-    #st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
-    if st.sidebar.button("Cerrar sesión"):
-        st.logout()
-else:
-    #if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login, args=["microsoft"]):
-    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-        #st.login("microsoft")
-        st.login()
-        #st.login(provider="microsoft")
-        
-        #st.write(f"{st.user["name"]} - {st.user["email"]}")
-    #st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
+if not st.user.is_logged_in:
+    st.button("Log in with Microsoft", on_click=st.login)  # or st.login("microsoft") if named
     st.stop()
-        #st.login(provider="microsoft")
 
-#st.markdown(f"Welcome! {st.user["name"]} - {st.user["email"]}")
+st.write(f"Welcome, {st.user.name}!")
+st.button("Log out", on_click=st.logout)
+
+
+# if st.session_state.get("authenticated"):
+#     st.sidebar.write(f"Hola! 👋 {st.user['name']}")
+#     if st.sidebar.button("Cerrar sesión"):
+#         st.logout()
+# else:
+#     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+#         st.login()
 
 
 # user_data = st.experimental_user 
