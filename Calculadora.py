@@ -80,7 +80,8 @@ if st.session_state.get("authenticated"):
         st.logout()
 else:
     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-        st.login()
+        st.login("microsoft")
+        #st.login()
         #st.login(provider="microsoft")
         
         #st.write(f"{st.user["name"]} - {st.user["email"]}")
