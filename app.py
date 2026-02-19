@@ -1,6 +1,6 @@
-import streamlit as st
-st.login()
-st.write(st.query_params)
+#import streamlit as st
+#st.login()
+#st.write(st.query_params)
 
 # if st.user.is_logged_in:
 #     st.write(f"Sesión activa: {st.user["name"]}")
