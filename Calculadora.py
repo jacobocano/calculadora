@@ -20,14 +20,11 @@ import streamlit as st
 # ------------------------------------------------------------------------------------------------------------------------------------
 
 if st.user:
-    #st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
-    if st.sidebar.button("Cerrar sesión"):
-        st.logout()
+    if st.sidebar.button("Cerrar sesión", on_click=st.logout):
+        pass
 else:
-    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-        st.login()
+    st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login)
     st.stop()
-
 
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Configuración general del panel
