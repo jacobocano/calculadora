@@ -19,7 +19,7 @@ import streamlit as st
 # Microsoft Login
 # ------------------------------------------------------------------------------------------------------------------------------------
 
-if st.user:
+if st.user.is_logged_in:
     if st.sidebar.button("Cerrar sesión", on_click=st.logout):
         pass
 else:
