@@ -20,7 +20,7 @@ import streamlit as st
 # ------------------------------------------------------------------------------------------------------------------------------------
 
 if st.user.is_logged_in:
-    st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
+    #st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
     if st.sidebar.button("Cerrar sesión"):
         st.logout()
 else:
