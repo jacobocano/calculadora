@@ -44,7 +44,7 @@ def login_screen():
         st.login()
     st.stop()
 
-if st.session_state:
+if st.user.is_logged_in:
     login_screen()
     
 else:
