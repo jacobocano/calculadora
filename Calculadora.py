@@ -15,62 +15,18 @@ from fastexcel import read_excel
 
 import streamlit as st
 
-# import requests
-
-# token_url = "https://login.microsoftonline.com/6b874ffe-e856-4262-bc7f-9f7b945ef3b3/oauth2/v2.0/token"
-
-# data = {
-#     "client_id": CLIENT_ID,
-#     "client_secret": CLIENT_SECRET,
-#     "code": auth_code,
-#     "redirect_uri": REDIRECT_URI,
-#     "grant_type": "authorization_code"
-# }
-
-# response = requests.post(token_url, data=data)
-# tokens = response.json()
-# st.write("Tokens:", tokens)
-
-# st.write("Query params:", st.query_params)                  # Si query_params está vacío → el flujo OAuth no se está procesando.
-# st.write("User:", st.user)                                  # Si st.user es None → la cookie no se está validando.
-# st.write("Logged:", st.user.is_logged_in)                   # Si query_params tiene code pero is_logged_in es False → cookie_secret / redirect mismatch.
-
-def login_screen():
-    st.header("Esta es una aplicación privada.")
-    st.subheader("Por favor, inicie sesión.")
-    st.session_state["user"] = {}
-    
-    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-        st.login()
-    st.stop()
-
-if st.user.is_logged_in:
-    login_screen()
-    
-else:
-    # st.header(f"Bienvenido, {st.user.name}!")
-    # st.button("Cerrar sesión", on_click=st.logout)
-    # st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
-    # st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
-    if st.sidebar.button("Cerrar sesión"):
-        st.logout()
-
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Microsoft Login
 # ------------------------------------------------------------------------------------------------------------------------------------
 
-
-# if st.user.is_logged_in:
-#     # st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
-#     # st.sidebar.write(f"Sesión activa: {st.user["name"]} - {st.user["email"]}")
-#     if st.sidebar.button("Cerrar sesión"):
-#         st.logout()
-# else:
-#     if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
-#         st.login()
-#         #st.login("microsoft")
-#         #st.write(f"{st.user["name"]} - {st.user["email"]}")
-#     st.stop()
+if st.user.is_logged_in:
+    st.sidebar.write(f"Hola! 👋 {st.user["name"]}")
+    if st.sidebar.button("Cerrar sesión"):
+        st.logout()
+else:
+    if st.sidebar.button("Iniciar sesión en Microsoft", on_click=st.login):
+        st.login()
+    st.stop()
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------
